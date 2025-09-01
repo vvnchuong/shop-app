@@ -2,10 +2,13 @@ import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Card, Divider, Form, Input, message, Space } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAPI } from "../../service/api";
+import { loginSuccess } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
 
   const navigate  = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (values) => {
     const res = await loginAPI(
@@ -13,17 +16,20 @@ const Login = () => {
       values.password
     );
 
+    
+
     if(res.data){
-      message.open({
-        type: "success",
-        message: "Đăng nhập thành công"
-      });
+      dispatch(
+      loginSuccess({
+        user: res.data.user, // thông tin user từ API
+        token: res.data.access_token
+      })
+    );
+      localStorage.setItem("access_token", res.data.access_token);
+      message.success("Đăng nhập thành công");
       navigate ("/");
     }else {
-      message.open({
-        type: "error",
-        message: "Tên đăng nhập hoặc mật khẩu không đúng."
-      });
+      message.error("Tên đăng nhập hoặc mật khẩu không đúng");
     }
   }
 
