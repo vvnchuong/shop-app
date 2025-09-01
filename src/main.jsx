@@ -10,6 +10,10 @@ import Register from './pages/register/index.jsx';
 import Login from './pages/login/index.jsx';
 import { store } from "./redux/store";
 import { Provider } from 'react-redux';
+import Admin from './pages/admin/index.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import AdminPage from './pages/admin/index.jsx';
+import Error403 from './pages/errors/Error403.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +27,17 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <Login />
-  }
+  },
+  {
+    path: "admin",
+    element: (
+      <ProtectedRoute element={<AdminPage />} allowedRoles={["ADMIN"]} />
+    )
+  },
+  {
+    path: "/403",
+    element: <Error403 />
+  },
 ]);
 
 createRoot(document.getElementById('root')).render(

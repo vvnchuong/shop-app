@@ -16,12 +16,10 @@ const Login = () => {
       values.password
     );
 
-    
-
     if(res.data){
       dispatch(
       loginSuccess({
-        user: res.data.user, // thông tin user từ API
+        user: res.data.user,
         token: res.data.access_token
       })
     );
