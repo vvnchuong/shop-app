@@ -14,6 +14,8 @@ import Admin from './pages/admin/index.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminPage from './pages/admin/index.jsx';
 import Error403 from './pages/errors/Error403.jsx';
+import UserAdminPage from './pages/admin/user/user.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -32,8 +34,12 @@ const router = createBrowserRouter([
     path: "admin",
     element: (
       <ProtectedRoute element={<AdminPage />} allowedRoles={["ADMIN"]} />
-    )
+    ),
+    children: [
+      { path: "users", element: <UserAdminPage />}
+    ]
   },
+
   {
     path: "/403",
     element: <Error403 />

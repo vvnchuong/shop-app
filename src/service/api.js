@@ -22,4 +22,9 @@ const loginAPI = (email, password) => {
   return instance.post(URL, data);
 }
 
-export { registerAPI, loginAPI }
+const getAllUsersAPI = (current, pageSize) => {
+  const URL = `/api/v1/user?current=${current}&pageSize=${pageSize}`;
+  return instance.get(URL);
+}
+
+export { registerAPI, loginAPI, getAllUsersAPI }
