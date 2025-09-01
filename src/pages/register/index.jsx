@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const Register = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
+  const handleRegister = (values) => {
     console.log("Form data:", values);
   };
 
@@ -37,7 +37,7 @@ const Register = () => {
           form={form}
           name="register"
           layout="vertical"
-          onFinish={onFinish}
+          onFinish={handleRegister}
           autoComplete="off"
         >
           <Form.Item
