@@ -1,11 +1,30 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import { Button, Card, Divider, Form, Input, Space } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Card, Divider, Form, Input, message, Space } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { loginAPI } from "../../service/api";
 
 const Login = () => {
 
-  const handleLogin = (values) => {
-    console.log(values);
+  const navigate  = useNavigate();
+
+  const handleLogin = async (values) => {
+    const res = await loginAPI(
+      values.username,
+      values.password
+    );
+
+    if(res.data){
+      message.open({
+        type: "success",
+        message: "Đăng nhập thành công"
+      });
+      navigate ("/");
+    }else {
+      message.open({
+        type: "error",
+        message: "Tên đăng nhập hoặc mật khẩu không đúng."
+      });
+    }
   }
 
   return (

@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space, Card, Divider } from "antd";
+import { Button, Form, Input, Space, Card, Divider, message } from "antd";
 import {
   UserOutlined,
   MailOutlined,
@@ -6,13 +6,37 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerAPI } from "../../service/api";
 
 const Register = () => {
   const [form] = Form.useForm();
 
-  const handleRegister = (values) => {
-    console.log("Form data:", values);
+  const navigate = useNavigate();
+
+  const handleRegister = async (values) => {
+    const res = await registerAPI(
+      values.fullName,
+      values.email,
+      values.password,
+      values.phone
+    )
+
+    if(res.data){
+      message.open({
+        type: "success",
+        content: "Đăng ký tài khoản thành công"
+      });
+      
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    }else {
+      message.open({
+        type: "error",
+        content: "Email đã tồn tại"
+      });
+    }
   };
 
   return (
