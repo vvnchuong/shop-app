@@ -14,7 +14,7 @@ import Admin from './pages/admin/index.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AdminPage from './pages/admin/index.jsx';
 import Error403 from './pages/errors/Error403.jsx';
-import UserAdminPage from './pages/admin/user/user.jsx';
+import UserAdminPage from './pages/admin/user/UserTable.jsx';
 
 
 const router = createBrowserRouter([

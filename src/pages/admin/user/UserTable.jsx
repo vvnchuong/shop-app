@@ -2,6 +2,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { Space, Table } from "antd";
 import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
+import UserModalCreate from "./UserModalCreate";
 
 const UserAdminPage = () => {
 
@@ -60,6 +61,14 @@ const UserAdminPage = () => {
 
   return (
     <>
+      {/* User modal create */}
+      <UserModalCreate 
+        loadUsers={loadUsers}
+        current={current}
+        pageSize={pageSize}
+      />
+      {/* End User Modal create */}
+
       <Table 
         dataSource={dataUsers} columns={columns}
         pagination={{
@@ -68,7 +77,7 @@ const UserAdminPage = () => {
           total: total,
           onChange: handlePagination
         }}
-      />;
+      />
     </>
   )
 }
