@@ -1,21 +1,34 @@
 import { EditOutlined } from "@ant-design/icons";
 import { Space, Table } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import UserModalCreate from "./UserModalCreate";
+import UserViewDetail from "./UserViewDetail";
 
 const UserAdminPage = () => {
 
-  const { loadUsers, dataUsers, current, setCurrent , pageSize, total } = useOutletContext();
+  const { loadUsers, dataUsers, current, setCurrent, pageSize, total } = useOutletContext();
+
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isOpenUserDetail, setIsOpenUserDetail] = useState(false);
 
   useEffect(() => {
     loadUsers(current, pageSize);
   }, [current, pageSize])
 
   const handlePagination = (pagination) => {
-    if(pagination != current){
+    if (pagination != current) {
       setCurrent(pagination);
     }
+  }
+
+  const handleOpenUserDetail = (user) => {
+    setSelectedUser(user);
+    setIsOpenUserDetail(true);
+  }
+
+  const handleCloseOpenUserDetail = () => {
+    setIsOpenUserDetail(false);
   }
 
   const handleEditUser = (user) => {
@@ -27,6 +40,9 @@ const UserAdminPage = () => {
       title: "Id",
       dataIndex: "_id",
       key: "_id",
+      render: (_, record) => (
+        <a onClick={() => handleOpenUserDetail(record)}>{record._id}</a>
+      )
     },
     {
       title: "Họ và tên",
@@ -57,19 +73,18 @@ const UserAdminPage = () => {
     }
   ];
 
-  console.log("Check",pageSize);
-
   return (
     <>
       {/* User modal create */}
-      <UserModalCreate 
+      <UserModalCreate
         loadUsers={loadUsers}
         current={current}
         pageSize={pageSize}
       />
       {/* End User Modal create */}
 
-      <Table 
+      {/* Table user */}
+      <Table
         dataSource={dataUsers} columns={columns}
         pagination={{
           current: current,
@@ -78,6 +93,14 @@ const UserAdminPage = () => {
           onChange: handlePagination
         }}
       />
+
+      {/* User detail */}
+      <UserViewDetail 
+        isOpenUserDetail={isOpenUserDetail}
+        handleCloseOpenUserDetail={handleCloseOpenUserDetail}
+        selectedUser={selectedUser}
+      />
+      {/* End user detail */}
     </>
   )
 }

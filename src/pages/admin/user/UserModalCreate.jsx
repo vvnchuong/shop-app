@@ -49,7 +49,7 @@ const UserModalCreate = ({ loadUsers, current, pageSize }) => {
         title="Thêm người dùng"
         open={isModalOpen}
         onOk={handleCreateUser}
-        confirmLoading={loading} // nút OK hiển thị loading khi submit
+        confirmLoading={loading}
         onCancel={handleCancel}
         okText="Thêm"
         cancelText="Hủy"
